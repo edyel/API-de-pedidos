@@ -18,17 +18,17 @@ A aplicação recebe requisições POST, para:
 
 ** 2-> para registrar no estoque a quantidade de um determinado produto, a aplicação receberá uma requisição POST para a URL "/estoque" informando qual o Id do produto e a quantidade ex:
 {
-	"idProduto" : "4",
+	"idProduto" : "1",
 	"quantidade" : "3"
 }
 
 ** 3-> para Cadastrar um pedido, a aplicação receberá uma requisição POST através da url "/pedido" e precisará do id desse pedido e de uma lista de produtos(contendo id do produto, o valor unitário e a quantidade), exemplo:
 {
-	"id" : "3",
+	"id" : "1",
 	"produtos" : [
 	{
 		"id": "1",
-	    "valor" : "60.0",
+	        "valor" : "60.0",
 		"quantidade" : "5"
   }, {
 		"id" : "2",
