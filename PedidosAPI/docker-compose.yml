@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+ rabbitmq:
+  image: rabbitmq:3.11-management
+  container_name: meubrocker
+  ports:
+   - 5672:5672
+   - 15672:15672
+  networks:
+   - compose-bridge
+ mysql:
+  image: mysql:latest
+  container_name: meusql
+  networks: 
+   - compose-bridge
+  environment:
+   - MYSQL_ROOT_PASSWORD=root
+   - MYSQL_DATABASE=banco_api
+  ports:
+   - 3306:3306
+   
+ pedidos-api:
+  image: edyel/pedidos-api
+  container_name: APIpedidos
+  networks:
+   - compose-bridge
+  ports:
+   - 8080:8080
+  depends_on:
+   - mysql
+   - rabbitmq
+  restart: on-failure:2
+networks:
+ compose-bridge:
+  driver: bridge

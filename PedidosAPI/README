@@ -1,0 +1,42 @@
+A API poderá ser executada através de um "docker-compose up" dentro da pasta do projeto.
+A aplicação recebe requisições POST, para:
+
+1. Registrar um produto no catálogo.
+2. Registrar a quantidade de um determinado produto do Catálogo no Estoque. (Deverá ser informado através de um JSON o "idProduto" e a "quantidade")
+3. Registrar um pedido na base de dados (haverá uma validação simples no estoque para determinar se o pedido poderá ser realizado com base na quantidade dos itens do pedido e do estoque)
+4. O pedido registrado na base de dados também guardará em outra tabela os produtos que fazem parte desse pedido(itens_pedido)
+5. Se cadastrado, a Aplicação enviará uma mensagem para o broker(RabbitMQ), informando em uma fila que o pedido foi realizado com sucesso. (usuario e senha do broker=guest)
+
+ 
+** 1-> Requisição POST para a url "/produto" contendo um JSON no seguinte formato (por exemplo):
+ {
+	"nome" : "Celular Motorola V3",
+	"valor" : "300.00",
+	"descricao" : "Celular com bluetooth e camera",
+	"categoria" : "ELETRONICOS"
+}
+
+** 2-> para registrar no estoque a quantidade de um determinado produto, a aplicação receberá uma requisição POST para a URL "/estoque" informando qual o Id do produto e a quantidade ex:
+{
+	"idProduto" : "4",
+	"quantidade" : "3"
+}
+
+** 3-> para Cadastrar um pedido, a aplicação receberá uma requisição POST através da url "/pedido" e precisará do id desse pedido e de uma lista de produtos(contendo id do produto, o valor unitário e a quantidade), exemplo:
+{
+	"id" : "3",
+	"produtos" : [
+	{
+		"id": "1",
+	    "valor" : "60.0",
+		"quantidade" : "5"
+  }, {
+		"id" : "2",
+		"valor" : "900.0",
+		"quantidade" : "3"
+	}
+	]
+}
+
+Os registros atualmente estão sendo acessados somente pela base de dados (usuario e senha= root).
+sendo possível acessar através de qualquer ferramenta como DBeaver/Mysql workbench etc..
